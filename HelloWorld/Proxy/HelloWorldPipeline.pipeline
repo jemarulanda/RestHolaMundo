@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="HelloWorld/WSDL/HelloWorld"/>
+            <con:binding>
+                <con:name>helloworld_bind</con:name>
+                <con:namespace>http://xmlns.oracle.com/OSB12_Examples/HelloWorld/HelloWorld</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-a004b01.Na972065.0.168190139cb.N7fa3">
+            <con:stage id="_StageId-a004b01.Na972065.0.168190139cb.N7fa1" name="RequestStage">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-a004b01.Na972065.0.168190139cb.N7fa2">
+            <con:stage id="_StageId-a004b01.Na972065.0.168190139cb.N7fa0" name="ResponseStage">
+                <con:context>
+                    <con1:userNsDecl prefix="hel" namespace="http://www.checkbus.me/schema/helloworld"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="body">
+                        <con1:id>_ActionId-a004b01.Na972065.0.168190139cb.N7f9d</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<soap-env:Body>
+<hel:helloWorldResponse>
+<hel:response>{fn:concat("Hola ",$body/hel:helloWorldRequest/hel:request, " ", "Esto es una prueba del OSB con Jenkins")}</hel:response>
+</hel:helloWorldResponse>
+</soap-env:Body>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-a004b01.Na972065.0.168190139cb.N7fa3</con:request>
+                <con:response>response-a004b01.Na972065.0.168190139cb.N7fa2</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

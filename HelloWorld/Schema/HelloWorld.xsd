@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hwObj="http://www.checkbus.me/schema/helloworld"
+            targetNamespace="http://www.checkbus.me/schema/helloworld" elementFormDefault="qualified">
+  <xsd:element name="helloWorldRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="request" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="helloWorldResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="response" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
